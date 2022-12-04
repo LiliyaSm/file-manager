@@ -1,11 +1,9 @@
-import { homedir } from "os";
-import readline from "readline";
+import { getCurrDir } from './currDir.js'
 
 export const startManager = (username) => {
-  let currDir = homedir();
+  const currDir = getCurrDir();
   console.log(`Welcome to the File Manager, ${username}!`);
   console.log(`You are currently in ${currDir}`);
-  return currDir;
 };
 
 export const exitManager = (username) => {

@@ -1,17 +1,14 @@
-// import { readdir } from "fs/promises";
-// import fs from "fs";
-import path from "path";
-// import { fileURLToPath } from "url";
-import { getAbsPath } from "./commands/fileSystem/getAbsPath.js";
 import { readFile } from "./commands/fileSystem/readFile.js";
 import { parseArgs } from "./parseArgs.js";
 import { startManager, exitManager } from "./startManager.js";
 import readline from "readline";
-import { getDirList } from "./commands/navigation/navigation.js";
+import { getDirList, goUp, changeDir } from "./commands/navigation/navigation.js";
+import { getCurrDir, initCurrDir, setCurrDir } from "./currDir.js";
 
 const start = () => {
   const { username } = parseArgs();
-  let currDir = startManager(username);
+  initCurrDir();
+  startManager(username);
 
   const rl = readline.createInterface({
     input: process.stdin,
@@ -27,25 +24,23 @@ const start = () => {
     }
     if (command === "ls") {
       try {
-        console.log(currDir);
-        await getDirList(currDir);
+        await getDirList(getCurrDir());
       } catch {
         console.log("Operation failed");
         return;
       }
     } else if (command === "cd") {
       try {
-        currDir = await getAbsPath(currDir, value);
-      } catch {
-        console.log("Operation failed");
+        await changeDir(value);
+      } catch (err) {
+        console.log(err);
         return;
       }
     } else if (command === "up") {
-      currDir = path.dirname(currDir);
+      await goUp();
     } else if (command === "cat") {
       try {
-        currDir = await getAbsPath(currDir, value);
-        await readFile(currDir); 
+        await readFile(value);
       } catch {
         console.log("Operation failed");
         return;
@@ -54,7 +49,7 @@ const start = () => {
       console.log("Invalid input");
       return;
     }
-    console.log(`You are currently in ${currDir}`);
+    console.log(`You are currently in ${getCurrDir()}`);
   });
   rl.on("SIGINT", () => {
     exitManager(username);
