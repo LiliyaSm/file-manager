@@ -1,11 +1,13 @@
 import { homedir } from "os";
 import { getAbsPath } from "./commands/fileSystem/getAbsPath.js";
 import { parseArgs } from "./parseArgs.js";
+import path from "path";
+import fs from "fs";
 
 let currDir;
 let username;
 
-export const initCurrDir = () => {
+export const initStorage = () => {
   currDir = homedir();
   username = parseArgs().username;
 };
@@ -20,6 +22,10 @@ export const getUsername = () => {
 
 export const setCurrDir = async (value) => {
   const newCurrDir = await getAbsPath(value);
-  currDir = newCurrDir;
-  //   return newCurrDir;
+  if (fs.lstatSync(newCurrDir).isDirectory()) {
+    currDir = newCurrDir;
+  } else {
+    // path is not a directory
+    throw new Error();
+  }
 };
