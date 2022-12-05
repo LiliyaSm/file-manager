@@ -1,9 +1,9 @@
 import { readdir } from "fs/promises";
-import { getCurrDir, setCurrDir } from "../../currDir.js";
+import { getCurrDir, setCurrDir } from "../../dataStorage.js";
 import path from "path";
 
-export const getDirList = async (src) => {
-  const files = await readdir(src, { withFileTypes: true });
+export const getDirList = async () => {
+  const files = await readdir(getCurrDir(), { withFileTypes: true });
   const tableData = files.map((file) => ({
     Name: file.name,
     Type: file.isFile() ? "file" : "directory",
@@ -25,13 +25,16 @@ export const getDirList = async (src) => {
   });
 
   console.table(tableData);
+  console.log(`You are currently in ${getCurrDir()}`);
 };
 
 export const goUp = async () => {
   const parentDir = path.dirname(getCurrDir());
   await setCurrDir(parentDir);
+  console.log(`You are currently in ${getCurrDir()}`);
 };
 
 export const changeDir = async (newPath) => {
   await setCurrDir(newPath);
+  console.log(`You are currently in ${getCurrDir()}`);
 };
