@@ -1,7 +1,6 @@
 import { homedir } from "os";
 import { getAbsPath } from "./commands/fileSystem/getAbsPath.js";
 import { parseArgs } from "./parseArgs.js";
-import path from "path";
 import fs from "fs";
 
 let currDir;
@@ -9,7 +8,7 @@ let username;
 
 export const initStorage = () => {
   currDir = homedir();
-  username = parseArgs().username;
+  username = parseArgs().username || "Anonym User";
 };
 
 export const getCurrDir = () => {

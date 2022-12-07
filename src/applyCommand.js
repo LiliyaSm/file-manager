@@ -1,6 +1,9 @@
 import { readFile } from "./commands/fileSystem/readFile.js";
 import { renameFile } from "./commands/fileSystem/renameFile.js";
 import { createFile } from "./commands/fileSystem/createFile.js";
+import { deleteFile } from "./commands/fileSystem/deleteFile.js";
+import { moveFile } from "./commands/fileSystem/moveFile.js";
+import { copyFile } from "./commands/fileSystem/copyFile.js";
 import { exitManager } from "./startManager.js";
 import {
   getDirList,
@@ -18,6 +21,9 @@ const COMMAND_LIST = {
   cat: readFile,
   add: createFile,
   rn: renameFile,
+  cp: copyFile,
+  rm: deleteFile,
+  mv: moveFile,
 };
 
 export const applyCommand = async (input) => {
