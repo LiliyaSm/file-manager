@@ -4,6 +4,10 @@ import { createFile } from "./commands/fileSystem/createFile.js";
 import { deleteFile } from "./commands/fileSystem/deleteFile.js";
 import { moveFile } from "./commands/fileSystem/moveFile.js";
 import { copyFile } from "./commands/fileSystem/copyFile.js";
+
+import { runOsCommand } from "./commands/operatingSystem/osCommands.js";
+import { calculateHash } from "./commands/calculateHash/calculateHash.js";
+import { compress, decompress } from "./commands/compression/compression.js";
 import { exitManager } from "./startManager.js";
 import {
   getDirList,
@@ -24,6 +28,13 @@ const COMMAND_LIST = {
   cp: copyFile,
   rm: deleteFile,
   mv: moveFile,
+  //os
+  os: runOsCommand,
+  //hash
+  hash: calculateHash,
+  //compression
+  compress,
+  decompress
 };
 
 export const applyCommand = async (input) => {

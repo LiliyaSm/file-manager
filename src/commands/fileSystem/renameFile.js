@@ -9,7 +9,7 @@ export const renameFile = async (value) => {
     const dirPath = path.dirname(pathToFile);
     const resultPath = path.join(dirPath, newFilename);
     //make sure that properFilename.md doesn't already exist
-    if (fs.existsSync(resultPath)) throw new Error();
+    await access(resultPath);
     await renameFS(pathToFile, resultPath);
     console.log(`You are currently in ${getCurrDir()}`);
   } catch(err) {
