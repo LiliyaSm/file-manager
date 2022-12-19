@@ -1,4 +1,4 @@
-import { createGzip, createUnzip } from "zlib";
+import { createBrotliCompress, createBrotliDecompress } from 'zlib';
 import { createReadStream, createWriteStream } from "fs";
 import { access } from "fs/promises";
 import { getCurrDir } from "../../dataStorage.js";
@@ -19,12 +19,12 @@ const createStreams = async (value, zipMethod) => {
 
 // compress path_to_file path_to_destination
 export const compress = (value) => {
-  const zipMethod = createGzip();
+  const zipMethod = createBrotliCompress();
   createStreams(value, zipMethod);
 };
 
 //decompress path_to_file path_to_destination
 export const decompress = (value) => {
-  const zipMethod = createUnzip();
+  const zipMethod = createBrotliDecompress();
   createStreams(value, zipMethod);
 };

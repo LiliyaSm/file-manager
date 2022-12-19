@@ -51,7 +51,7 @@ export const applyCommand = async (input) => {
     await func(value);
   } catch (err) {
     console.log("Operation failed");
-    // console.log(err);
+    console.log(err);
     return;
   }
 };

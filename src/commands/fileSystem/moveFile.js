@@ -7,8 +7,7 @@ import { access } from "fs/promises";
 export const moveFile = async (value) => {
   const [pathToFile] = value.split(" ");
   try {
-    console.log("pathToFile", pathToFile);
-    await access(resultPath);
+    await access(pathToFile);
     copyFile(value);
     await rm(pathToFile);
   } catch (err) {
