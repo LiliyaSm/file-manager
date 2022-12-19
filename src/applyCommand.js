@@ -49,9 +49,8 @@ export const applyCommand = async (input) => {
   }
   try {
     await func(value);
-  } catch (err) {
+  } catch {
     console.log("Operation failed");
-    console.log(err);
     return;
   }
 };
