@@ -21,7 +21,8 @@ export const getUsername = () => {
 
 export const setCurrDir = async (value) => {
   const newCurrDir = await getAbsPath(value);
-  if (await lstat(newCurrDir).isDirectory()) {
+  const stat = await lstat(newCurrDir);
+  if (stat.isDirectory()) {
     currDir = newCurrDir;
   } else {
     // path is not a directory
